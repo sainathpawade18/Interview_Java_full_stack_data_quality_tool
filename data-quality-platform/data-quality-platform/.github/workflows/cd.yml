@@ -1,0 +1,36 @@
+name: CD - Build and Push Docker Images
+
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: read
+
+jobs:
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-region: ${{ secrets.AWS_REGION }}
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+      - uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Build and push backend
+        env:
+          REGISTRY: ${{ secrets.ECR_REGISTRY }}
+        run: |
+          docker build -t $REGISTRY/dq-backend:${GITHUB_REF_NAME} ./backend
+          docker push $REGISTRY/dq-backend:${GITHUB_REF_NAME}
+
+      - name: Build and push frontend
+        env:
+          REGISTRY: ${{ secrets.ECR_REGISTRY }}
+        run: |
+          docker build -t $REGISTRY/dq-frontend:${GITHUB_REF_NAME} ./frontend
+          docker push $REGISTRY/dq-frontend:${GITHUB_REF_NAME}

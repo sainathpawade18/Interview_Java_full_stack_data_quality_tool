@@ -1,0 +1,6 @@
+recordCode,name,email,phone,category,statusValue
+MAT-1001,Steel Coil,user1@example.com,+919876543210,RAW_MATERIAL,ACTIVE
+MAT-1002,Aluminium,user2@example.com,+919876543211,RAW_MATERIAL,ACTIVE
+MAT-1003,Plastic Resin,user3@example.com,+919876543212,RAW_MATERIAL,INACTIVE
+MAT-1004,Invalid Email,wrong-email,+919876543213,RAW_MATERIAL,ACTIVE
+MAT-1001,Duplicate Code,user5@example.com,+919876543214,RAW_MATERIAL,ACTIVE

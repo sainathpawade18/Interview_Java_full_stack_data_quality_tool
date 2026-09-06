@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: dq-config
+  namespace: dq-platform
+data:
+  DB_URL: jdbc:mysql://mysql:3306/dq_platform?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+  VITE_API_URL: http://localhost:8080/api

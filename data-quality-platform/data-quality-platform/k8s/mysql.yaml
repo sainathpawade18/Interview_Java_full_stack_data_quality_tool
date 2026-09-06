@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql
+  namespace: dq-platform
+spec:
+  replicas: 1
+  selector: {matchLabels: {app: mysql}}
+  template:
+    metadata: {labels: {app: mysql}}
+    spec:
+      containers:
+      - name: mysql
+        image: mysql:8.4
+        ports: [{containerPort: 3306}]
+        env:
+        - {name: MYSQL_DATABASE, value: dq_platform}
+        - {name: MYSQL_USER, value: dquser}
+        - {name: MYSQL_PASSWORD, value: dqpass}
+        - {name: MYSQL_ROOT_PASSWORD, value: rootpass}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql
+  namespace: dq-platform
+spec:
+  selector: {app: mysql}
+  ports: [{port: 3306, targetPort: 3306}]
